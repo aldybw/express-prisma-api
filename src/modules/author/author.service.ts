@@ -1,7 +1,6 @@
-import { transformDocument } from "@prisma/client/runtime";
-import { db } from "../utils/db.server";
+import { db } from "../../utils/db.server";
 
-type Author = {
+export type Author = {
   id: number;
   firstName: string;
   lastName: string;
@@ -47,13 +46,13 @@ export const updateAuthor = async (
   id: number
 ): Promise<Author> => {
   const { firstName, lastName } = author;
-  return db.author.update({
+  return await db.author.update({
     where: {
       id,
     },
     data: {
-      firstName: firstName || undefined,
-      lastName: lastName || undefined,
+      firstName,
+      lastName,
     },
     select: {
       id: true,
